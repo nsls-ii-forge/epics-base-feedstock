@@ -1,1 +1,23 @@
-[]
+github:
+  user_or_org: nsls-ii-forge
+channels:
+  sources:
+    - nsls2forge
+    - defaults
+  targets:
+    - [nsls2forge, main]
+travis:
+  secure:
+    BINSTAR_TOKEN: GmLEuV4iPgo+jtvaOZ5HFWIly8EWf/TqKOaZz2UaBun8/bnucqvAN/wSQBbtgqJrbz1Llafm3/aweoOk4htQyrZwEMK2wgJsdmp3yu9D7e+Ujy47gt9S17yijuNz6YgsH+2a2ZACnqzXo6HH97FvZbB0aaqhrGdyXW5XDe9qxnN1VHqjWckcIX6XSD2puudbAIgjBJL2htxAMt9vERt1TESI1vbWUa7okxYi3u5VPqu4YSSndQdPQjBE361JJClH1KEDhOxz9UZgrmqPqkRrmxbkvsoYEARkvGSLX2/42XB8tHpunPhaL/WSa+GxkO9zL9RTwWXKvtdhRxUxo1uQeboZb3fwP9snyC9NUxbLCz76wO+FpH/3btQozT18fbkqln3R9i9TBXw5BPolFhIfbq6k/L/ZhyZKsauTCO015R/vNSabKu8aeLPdLa/lwm3SAwAmUsAwvACP9Hepkg+mYjNJwFhP9rSSt9n5G2/umiozII06SE1KrWiRhI+vI/9Z57qlHhSVM/9RbVPi45MeQnr86wnL1rGqBdQQsrCD5hNruoYLEr2Jgw7dod1ozNpR+uaBmqTou5eTZMv2FO/qOcBkYGFBVPwVRj2a3t6zEgFwY/ZgZU6mInDLVbVyZjjJQXDhQ66VbWvtW+PobBRNkhfNQFxaSRMtoatnqYGjNGc=
+appveyor:
+  secure:
+    BINSTAR_TOKEN: yz5KKf5dQbaqyqnlq32LSt5BLNK10eqavFqOzTixaikBeNmG3G/fX870+XR0Sih/
+azure:
+  user_or_org: nsls2forge
+  project_name: nsls2forge
+min_py_ver: '36'
+provider:
+  linux: azure
+  osx: azure
+  win: azure
+upload_on_branch: master
