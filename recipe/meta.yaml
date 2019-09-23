@@ -1,12 +1,12 @@
+{% set name = "epics-base" %}
 {% set version = "3.15.6" %}
 {% set sha256 = "537e5249011ce90bdffae057994daedd89ae6351667f0aa89ab6918935caf5bc" %}
 
 package:
-  name: epics-base
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: base-{{ version }}.tar.gz
   url: https://epics.anl.gov/download/base/base-{{ version }}.tar.gz
   sha256: {{ sha256 }}
   patches:
@@ -41,8 +41,3 @@ about:
   license: Epics Open
   license_file: LICENSE
   summary: EPICS Base Library
-
-extra:
-  recipe-maintainers:
-    - simongregorebner
-    - tacaswell
