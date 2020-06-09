@@ -43,17 +43,10 @@ Current build status
                 </a>
               </td>
             </tr><tr>
-              <td>win_c_compilervs2008cxx_compilervs2008</td>
+              <td>win</td>
               <td>
                 <a href="https://dev.azure.com/nsls2forge/nsls2forge/_build/latest?definitionId=7&branchName=master">
-                  <img src="https://dev.azure.com/nsls2forge/nsls2forge/_apis/build/status/epics-base-feedstock?branchName=master&jobName=win&configuration=win_c_compilervs2008cxx_compilervs2008" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>win_c_compilervs2015cxx_compilervs2015</td>
-              <td>
-                <a href="https://dev.azure.com/nsls2forge/nsls2forge/_build/latest?definitionId=7&branchName=master">
-                  <img src="https://dev.azure.com/nsls2forge/nsls2forge/_apis/build/status/epics-base-feedstock?branchName=master&jobName=win&configuration=win_c_compilervs2015cxx_compilervs2015" alt="variant">
+                  <img src="https://dev.azure.com/nsls2forge/nsls2forge/_apis/build/status/epics-base-feedstock?branchName=master&jobName=win&configuration=win_" alt="variant">
                 </a>
               </td>
             </tr>
@@ -76,6 +69,7 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-epics--base-green.svg)](https://anaconda.org/nsls2forge/epics-base) | [![Conda Downloads](https://img.shields.io/conda/dn/nsls2forge/epics-base.svg)](https://anaconda.org/nsls2forge/epics-base) | [![Conda Version](https://img.shields.io/conda/vn/nsls2forge/epics-base.svg)](https://anaconda.org/nsls2forge/epics-base) | [![Conda Platforms](https://img.shields.io/conda/pn/nsls2forge/epics-base.svg)](https://anaconda.org/nsls2forge/epics-base) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-epics--base--static--libs-green.svg)](https://anaconda.org/nsls2forge/epics-base-static-libs) | [![Conda Downloads](https://img.shields.io/conda/dn/nsls2forge/epics-base-static-libs.svg)](https://anaconda.org/nsls2forge/epics-base-static-libs) | [![Conda Version](https://img.shields.io/conda/vn/nsls2forge/epics-base-static-libs.svg)](https://anaconda.org/nsls2forge/epics-base-static-libs) | [![Conda Platforms](https://img.shields.io/conda/pn/nsls2forge/epics-base-static-libs.svg)](https://anaconda.org/nsls2forge/epics-base-static-libs) |
 
 Installing epics-base
 =====================
@@ -86,10 +80,10 @@ Installing `epics-base` from the `nsls2forge` channel can be achieved by adding 
 conda config --add channels nsls2forge
 ```
 
-Once the `nsls2forge` channel has been enabled, `epics-base` can be installed with:
+Once the `nsls2forge` channel has been enabled, `epics-base, epics-base-static-libs` can be installed with:
 
 ```
-conda install epics-base
+conda install epics-base epics-base-static-libs
 ```
 
 It is possible to list all of the versions of `epics-base` available on your platform with:
