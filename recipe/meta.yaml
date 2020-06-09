@@ -1,43 +1,120 @@
-{% set name = "epics-base" %}
-{% set version = "3.15.6" %}
-{% set sha256 = "537e5249011ce90bdffae057994daedd89ae6351667f0aa89ab6918935caf5bc" %}
+{% set version = "7.0.4" %}
+{% set sha256 = "1f0597b91740742beec49ca1ca59e7b71f63483b7495068b4f0f685c0cda9e69" %}
 
 package:
-  name: {{ name|lower }}
+  name: epics-base
   version: {{ version }}
 
 source:
+  fn: base-{{ version }}.tar.gz
   url: https://epics.anl.gov/download/base/base-{{ version }}.tar.gz
   sha256: {{ sha256 }}
   patches:
-    - config_site.diff  # [not win]
-    - config_common.diff  # [not win]
-    - config_readline.diff  # [linux]
+    - CONFIG_COMMON_install_permissions.patch
+    - force_readline_commandline_library.patch  # [linux]
 
 build:
   number: 0
+  run_exports:
+    - {{ pin_subpackage('epics-base', max_pin='x.x.x.x') }}
 
 requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - make  # [not win]
-    - m2w64-make  # [win]
-    - perl  # [win]
+    - make
+    - perl
+    - m2-patch      # [win]
+    # To run pre-build.py
+    - python >=3.6  # [win]
+  host:
+    - readline      # [unix]
 
 test:
+  source_files:
+    - modules/pva2pva/loopback.conf
   commands:
-    - test -f ${PREFIX}/epics/bin/${EPICS_HOST_ARCH}/caget  # [not win]
-    - test -f ${PREFIX}/epics/include/epicsVersion.h  # [not win]
-    - test -f ${PREFIX}/epics/lib/${EPICS_HOST_ARCH}/libCom${SHLIB_EXT}  # [not win]
-    - if %ARCH%==32 (set EPICS_HOST_ARCH=win32-x86) else if %ARCH%==64 (set EPICS_HOST_ARCH=windows-x64)  # [win]
-    - if not exist %PREFIX%\epics\bin\%EPICS_HOST_ARCH%\caget.exe exit 1  # [win]
-    - if not exist %PREFIX%\epics\bin\%EPICS_HOST_ARCH%\Com.dll exit 1  # [win]
-    - if not exist %PREFIX%\epics\lib\%EPICS_HOST_ARCH%\Com.lib exit 1  # [win]
-    - if not exist %PREFIX%\epics\include\epicsVersion.h exit 1  # [win]
+    - caget -h
+    - cainfo -h
+    - caput -h
+    - camonitor -h
+    - pvget -h
+    - pvput -h
+    - pvinfo -h
+    - pvlist -h
+    - softIoc -h
+    - softIocPVA -h
+    # p2p -h exits with 1... Use -C flag to test it instead
+    - p2p -C modules/pva2pva/loopback.conf
+    - test -f ${EPICS_BASE}/bin/${EPICS_HOST_ARCH}/caget                # [not win]
+    - test -f ${EPICS_BASE}/include/epicsVersion.h                      # [not win]
+    - test -f ${EPICS_BASE}/lib/${EPICS_HOST_ARCH}/libCom${SHLIB_EXT}   # [not win]
+    - test -f ${EPICS_BASE}/lib/${EPICS_HOST_ARCH}/libca${SHLIB_EXT}    # [not win]
+    - if not exist %EPICS_BASE%\bin\%EPICS_HOST_ARCH%\caget.exe exit 1  # [win]
+    - if not exist %EPICS_BASE%\bin\%EPICS_HOST_ARCH%\Com.dll exit 1    # [win]
+    - if not exist %EPICS_BASE%\bin\%EPICS_HOST_ARCH%\ca.dll exit 1     # [win]
+    - if not exist %EPICS_BASE%\include\epicsVersion.h exit 1           # [win]
+
+outputs:
+  - name: epics-base
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - make
+        - perl
+        - m2-patch      # [win]
+        # To run pre-build.py
+        - python >=3.6  # [win]
+      host:
+        - readline      # [unix]
+      run:
+        - perl
+    files:
+      - etc
+      - epics/bin
+      - epics/cfg
+      - epics/configure
+      - epics/db
+      - epics/dbd
+      - epics/html
+      - epics/include
+      # windows .dll are under bin
+      - epics/lib/*/*.dylib  # [osx]
+      - epics/lib/*/*.so*    # [linux]
+      - epics/lib/perl
+      - epics/lib/pkgconfig
+      - epics/templates
+
+  - name: epics-base-static-libs
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - make
+        - perl
+        - m2-patch      # [win]
+        # To run pre-build.py
+        - python >=3.6  # [win]
+      run:
+        - {{ pin_subpackage('epics-base', max_pin="x.x.x.x") }}
+    files:
+      - epics/lib/*/*.lib  # [win]
+      - epics/lib/*/*.a    # [not win]
+    test:
+      commands:
+        - test -f ${EPICS_BASE}/lib/${EPICS_HOST_ARCH}/libca.a            # [not win]
+        - test -f ${EPICS_BASE}/lib/${EPICS_HOST_ARCH}/libCom.a           # [not win]
+        - if not exist %EPICS_BASE%\lib\%EPICS_HOST_ARCH%\ca.lib exit 1   # [win]
+        - if not exist %EPICS_BASE%\lib\%EPICS_HOST_ARCH%\Com.lib exit 1  # [win]
 
 about:
   home: http://www.aps.anl.gov/epics
   license: Epics Open
   license_file: LICENSE
   summary: EPICS Base Library
+
+extra:
+  recipe-maintainers:
+    - tacaswell
+    - beenje

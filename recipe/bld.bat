@@ -12,5 +12,4 @@ copy %RECIPE_DIR%\pre-build.py %SRC_DIR%
 python pre-build.py
 
 echo Building at %CD%
-mingw32-make clean
-mingw32-make
+make
