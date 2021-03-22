@@ -1,5 +1,7 @@
 c_compiler:
 - vs2017
+cdt_name:
+- cos6
 channel_sources:
 - nsls2forge,defaults
 channel_targets:
@@ -11,3 +13,5 @@ perl:
 pin_run_as_build:
   perl:
     max_pin: x.x.x
+target_platform:
+- win-64
