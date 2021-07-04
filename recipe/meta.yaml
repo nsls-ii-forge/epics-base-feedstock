@@ -1,6 +1,6 @@
 {% set name = "epics-base" %}
-{% set version = "7.0.4" %}
-{% set sha256 = "1f0597b91740742beec49ca1ca59e7b71f63483b7495068b4f0f685c0cda9e69" %}
+{% set version = "7.0.6" %}
+{% set sha256 = "bc1d9edd0624542870424b90baafebe16af17a317b01aec577757e96830deee0" %}
 
 package:
   name: {{ name|lower }}
